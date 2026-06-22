@@ -5,19 +5,20 @@ I am an AI chatbot powered by OpenAI.
 - Preface your message with "djGPT3" for access to the engine that bypasses restrictions.
 """
 
-import discord
-from dotenv import load_dotenv
 import os
+
+import discord
 import openai
+from dotenv import load_dotenv
 
 
 class Bot(discord.Client):
     async def on_ready(self):
-        """ Called when the bot is online """
+        """Called when the bot is online"""
         print(f"{self.user} is online")
 
     async def on_message(self, message):
-        """ Called when a message is received -- private or public"""
+        """Called when a message is received -- private or public"""
         if message.author == self.user:
             # Prevents the bot from responding to itself
             return
@@ -30,7 +31,7 @@ class Bot(discord.Client):
                 max_tokens=1000,
                 temperature=0.0,
             )
-            await message.channel.send(response['choices'][0]['text'])
+            await message.channel.send(response["choices"][0]["text"])
             return
         elif message.content.startswith("djGPT "):
             prompt = message.content[6:]
@@ -47,7 +48,7 @@ class Bot(discord.Client):
             max_tokens=1000,
             temperature=0.0,
         )
-        await message.channel.send(response['choices'][0]['message']['content'])
+        await message.channel.send(response["choices"][0]["message"]["content"])
 
 
 if __name__ == "__main__":
